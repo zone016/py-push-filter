@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "pushy"
+version = "0.1.0"
+description = "Workflow and action file filter for push triggers."
+authors = ["Jojo <jonas.uliana@pm.me>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.scripts]
+pushy = "pushy.app:main"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.31.0"
+
+[tool.poetry.group.dev.dependencies]
+bandit = "^1.7.7"
+pytest = "^8.0.1"
+isort = "^5.13.2"
+pytest-cov = "^4.1.0"
+black = "^24.2.0"
+taskipy = "^1.12.2"
+flake8 = "^7.0.0"
+
+[tool.pytest.ini_options]
+pythonpath = "."
+
+[tool.black]
+line-length = 79
+
+[tool.isort]
+profile = "black"
+line_length = 79
+
+[tool.taskipy.tasks]
+lint = "isort ./pushy ./tests && black -S ./pushy ./tests && flake8"
+test = "pytest -s -x -vv"
+sast = "bandit -r ./pushy"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
